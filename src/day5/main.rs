@@ -149,6 +149,6 @@ fn main() -> std::io::Result<()> {
         return Err(std::io::Error::new(std::io::ErrorKind::InvalidInput, "Expected filename as argument"));
     }
     challenge1(&argv[1])?;
-    challenge2(&argv[1])?;
+    challenge1(&argv[1])?;
     Ok(())
 }
