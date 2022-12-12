@@ -10,22 +10,6 @@ type IoError = std::io::Error;
 
 /// Couldn't be bothered to modify my parser for task 2... so the modulus is 
 /// a magic number here.
-/// 
-/// Explaination:
-/// Monkey i throws the item to "true" if 
-///     worry(item(i)) % PRIME(i) == 0      (1)
-/// as all monkey have a unique prime no other j exists so that
-///     worry(item(i)) % PRIME(j) == 0
-/// 
-/// Thus for 
-///     worry'(item(i)) = worry(item(i)) % MODULUS 
-/// where 
-///     MODULUS = prod_j PRIME(j)
-/// follows 
-///     worry'(item(i)) == 0    iff (1)
-/// 
-/// So only monkey i throws the item to "true" in that round if the original condition holds
-/// but worry' is way smaller than worry avoiding the overflow problem in task2.
 const MODULUS: usize = 7 * 19 * 17 * 11 * 13 * 2 * 5 * 3;
 
 fn parse_starting_items(line: &str) -> std::io::Result<VecDeque<usize>> {
