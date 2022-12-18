@@ -25,7 +25,7 @@ impl PointTransform {
 
     fn bound_check(&self, p: Point) -> Option<Point> {
         let (x, y) = p;
-        if x < self.xmin || x >= self.xmax || y < self.ymin || y >= self.ymax {
+        if x < self.xmin || y < self.ymin || y >= self.ymax {
             return None;
         } 
         Some(p)
@@ -157,7 +157,8 @@ struct RockStopper {
     active: u8,
 }
 
-const INIT_CAP: usize = 5000000;
+// const INIT_CAP: usize = 5000000;
+const INIT_CAP: usize = 25000000;
 impl RockStopper {
     fn new() -> Self {
         Self { 
@@ -167,6 +168,16 @@ impl RockStopper {
             max_x: 0,
             active: 0,
         }
+    }
+
+    fn prev(&self) -> &HashSet<Point> {
+        if self.active == 0 {
+            return &self.third;
+        }
+        if self.active == 1 {
+            return &self.first;
+        }
+        &self.second
     }
 
     fn active(&self) -> &HashSet<Point> {
@@ -191,6 +202,7 @@ impl RockStopper {
 
     fn insert_rock(&mut self, rock: &Vec<Point>) {
         if self.active().len() >= INIT_CAP {
+            println!("fill factor {}", self.active().len());
             if self.active == 0 {
                 self.second.drain();
             }
@@ -214,6 +226,8 @@ impl RockStopper {
         for p in rock {
             if self.active().contains(p) {
                 return true;
+            } else if self.prev().contains(p) {
+                return true;
             } else if p.0 < 0 {
                 return true;
             }
@@ -234,7 +248,7 @@ fn transform(rock: &Vec<Point>, pt: &PointTransform, dx: i64, dy: i64) -> Option
 fn simulate(directions: &Vec<Direction>) {
     let mut stopped_rocks = RockStopper::new();
     let mut max_x = 0;
-    let pt = PointTransform::new(0, 9999999, 0, 7);
+    let pt = PointTransform::new(0, 999999999, 0, 7);
     let mut rg = RockGen::new(&pt);
     let mut dircyc = directions.iter().cycle();
  
