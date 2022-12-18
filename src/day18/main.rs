@@ -1,11 +1,7 @@
 #![feature(iterator_try_collect)]
-use std::borrow::Borrow;
-use std::collections::HashMap;
 use std::collections::HashSet;
-use std::collections::btree_map::OccupiedEntry;
 use std::env;
 use std::fs::File;
-use std::hash::Hash;
 use std::io::prelude::*;
 use std::io::ErrorKind;
 
